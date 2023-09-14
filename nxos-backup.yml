@@ -1,0 +1,33 @@
+- name: Backup Cisco NXOS to a server
+  hosts: nxos
+  gather_facts: no
+  vars_files:
+  - vars/main.yml
+  tasks:
+
+  - name: Backup current config
+    nxos_config:
+      backup: yes
+      backup_options:
+        dir_path: /tmp/
+    register: config
+
+  - name: Create backup folder on backup server
+    ansible.builtin.file:
+      path: "{{ backup_server_folder }}"
+      state: directory
+    become: true
+    delegate_to: "{{ backup_server }}"
+    vars:
+      ansible_user: "{{ backup_server_user }}"
+      ansible_ssh_pass: "{{ backup_server_pass }}"
+
+  - name: Copy config to backup server
+    copy:
+      src: "{{ config.backup_path }}"
+      dest: "{{ backup_server_folder }}{{ config.filename }}"
+    become: true
+    delegate_to: "{{ backup_server }}"
+    vars:
+      ansible_user: "{{ backup_server_user }}"
+      ansible_ssh_pass: "{{ backup_server_pass }}"
