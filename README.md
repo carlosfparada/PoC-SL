@@ -1,11 +1,10 @@
 # PoC-SL
 
 1. VM Deployment
-VMware: https://github.com/carlosfparada/AWS-RHEL/
-Azure: 
+VMware: https://github.com/carlosfparada/SNow-VMware-RHEL/
+Azure: https://github.com/carlosfparada/Azure-RHEL/
 SNow (opcional*): 
 IPAM  (opcional*): 
-
 
 2. Regras Firewall para VM
 Fortinet: https://github.com/carlosfparada/Firewalls/
